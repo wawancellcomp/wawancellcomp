@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SULISTIAWAN, S.Kom.® — Full Stack Web Developer & System Architect</title>
+  <meta name="description" content="Portofolio resmi Sulistiawan, S.Kom. — Full Stack Web Developer, Technical Leader, dan Founder. Spesialis WebGL, Modern Vanilla JS, SPA, & Cloud AI." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Syne (Display), Plus Jakarta Sans (Body), JetBrains Mono (Indices/Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles & Editorial Tokens -->
+  <style>
+    :root {
+      --bg-obsidian: #070709;
+      --surface-card: #111116;
+      --surface-elevated: #17171f;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(239, 68, 68, 0.45);
+      --accent-crimson: #ef4444;
+      --accent-cyan: #38bdf8;
+      --text-primary: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      selection-background-color: var(--accent-crimson);
+      selection-color: #ffffff;
+    }
+
+    ::selection {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg-obsidian);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Syne', sans-serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Subtle Editorial Grid & Ambient Lighting */
+    .bg-editorial-grid {
+      background-size: 56px 56px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    }
+
+    .ambient-orb {
+      transition: opacity 0.6s ease, transform 8s ease-in-out;
+      pointer-events: none;
+    }
+
+    body.motion-off .ambient-orb,
+    body.motion-off .marquee-track {
+      animation: none !important;
+      opacity: 0.15 !important;
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(25px, -20px) scale(1.08); }
+    }
+
+    .animate-orb {
+      animation: floatPulse 11s ease-in-out infinite;
+    }
+
+    /* Infinite Marquee */
+    @keyframes scrollMarquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      animation: scrollMarquee 28s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* Interactive Before/After Code-to-Render Slider */
+    .comparison-wrapper {
+      position: relative;
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .comparison-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      overflow: hidden;
+      border-right: 2px solid #ef4444;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070709;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262630;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ef4444;
+    }
+
+    /* Card hover transition */
+    .project-card {
+      background: linear-gradient(180deg, rgba(23, 23, 31, 0.7) 0%, rgba(17, 17, 22, 0.95) 100%);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover {
+      border-color: rgba(239, 68, 68, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(239, 68, 68, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-editorial-grid relative antialiased selection:bg-red-500 selection:text-white">
+
+  <!-- Ambient Studio Background Glows -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="ambient-orb animate-orb absolute -top-32 -left-24 w-96 h-96 rounded-full bg-red-600/10 blur-[130px]"></div>
+    <div class="ambient-orb animate-orb absolute top-[35%] -right-32 w-[28rem] h-[28rem] rounded-full bg-sky-500/10 blur-[140px]" style="animation-delay: -4s;"></div>
+    <div class="ambient-orb animate-orb absolute bottom-10 left-1/3 w-80 h-80 rounded-full bg-red-500/5 blur-[120px]" style="animation-delay: -7s;"></div>
+  </div>
+
+  <!-- 1. STICKY MINIMALIST NAVBAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#070709]/80 border-b border-white/[0.08]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 group focus:outline-none">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500 group-hover:scale-125 transition-transform"></span>
+        <span class="font-display font-extrabold text-lg sm:text-xl tracking-wider text-white">
+          SULISTIAWAN<span class="text-red-500">®</span>
+        </span>
+      </a>
+
+      <!-- Center Navigation Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="#karya" class="hover:text-white transition-colors">Karya</a>
+        <a href="#surface" class="hover:text-white transition-colors">Keunggulan</a>
+        <a href="#tentang" class="hover:text-white transition-colors">Tentang</a>
+        <a href="#perjalanan" class="hover:text-white transition-colors">Perjalanan</a>
+        <a href="#kontak" class="hover:text-white transition-colors">Kontak</a>
+      </nav>
+
+      <!-- Right Controls: Motion Toggle + CTA -->
+      <div class="flex items-center gap-3">
+        <button id="motionToggleBtn" type="button" onclick="toggleMotion()" class="font-mono-code text-xs px-3 py-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 transition flex items-center gap-1.5">
+          <span id="motionDot" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span id="motionLabel">Motion: ON</span>
+        </button>
+
+        <button type="button" onclick="openBriefModal()" class="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 text-white font-semibold text-xs sm:text-sm tracking-wide transition shadow-lg shadow-red-600/20 flex items-center gap-1.5">
+          <span>Let's talk</span>
+          <span class="font-mono-code text-xs">↗</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <main class="relative z-10">
+
+    <!-- 2. HERO SECTION (EDITORIAL STUDIO STYLE) -->
+    <section class="pt-12 pb-20 md:pt-20 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      
+      <!-- Top Status Pill Row -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-white/[0.08]">
+        <div class="flex items-center gap-2.5">
+          <span class="font-mono-code text-xs uppercase tracking-[0.2em] text-slate-400">
+            FULL STACK DEVELOPER · TECHNICAL LEADER
+          </span>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="font-mono-code text-[11px] font-semibold tracking-wider text-emerald-300 uppercase">
+            AVAILABLE FOR COLLABORATION
+          </span>
+        </div>
+      </div>
+
+      <!-- Giant Editorial Display Typography -->
+      <div class="mt-10 md:mt-14">
+        <p class="font-mono-code text-sm sm:text-base text-red-400 tracking-widest uppercase mb-2">
+          Hello, I'm
+        </p>
+        <h1 class="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] leading-[1.03] tracking-tight text-white uppercase">
+          SULISTIAWAN, <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">S.Kom.</span>
+        </h1>
+        <h2 class="font-display font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-sky-400 mt-2 uppercase">
+          FULL STACK &amp; SYSTEM ARCHITECT
+        </h2>
+      </div>
+
+      <!-- Editorial Grid: Narrative + Location Badge -->
+      <div class="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-7">
+          <p class="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed font-normal">
+            <span class="text-white font-semibold">Merangkai logika. Menciptakan solusi nyata.</span> Saya mengubah ide dan kebutuhan operasional menjadi aplikasi web berkinerja tinggi—dari baris kode <span class="font-mono-code text-sm text-sky-400">vanilla architecture</span> pertama, pemrosesan visual <span class="font-mono-code text-sm text-red-400">WebGL</span>, hingga ekosistem <span class="font-mono-code text-sm text-emerald-400">Cloud &amp; Multi-Agent AI</span>.
+          </p>
+
+          <!-- CTA Buttons Row -->
+          <div class="mt-8 flex flex-wrap items-center gap-3.5">
+            <a href="#karya" class="px-6 py-3.5 rounded-full bg-white text-black hover:bg-red-500 hover:text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition flex items-center gap-2">
+              <span>LIHAT KARYA SAYA</span>
+              <span>↓</span>
+            </a>
+            <a href="https://github.com/wawancellcomp" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-full bg-[#111116] hover:bg-white/10 text-white border border-white/15 font-mono-code text-xs sm:text-sm transition flex items-center gap-2">
+              <span>GITHUB PROFILE</span>
+              <span class="text-red-400">↗</span>
+            </a>
+            <a href="https://www.linkedin.com/in/sulistiawan-s-kom-56215b92" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-full bg-[#111116] hover:bg-sky-500/20 hover:border-sky-400/40 text-slate-200 border border-white/15 font-mono-code text-xs sm:text-sm transition flex items-center gap-2">
+              <span>LINKEDIN</span>
+              <span class="text-sky-400">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 lg:text-right">
+          <div class="inline-block p-5 rounded-2xl bg-[#111116]/90 border border-white/[0.08] text-left">
+            <div class="font-mono-code text-xs text-slate-400 flex items-center gap-2">
+              <span class="text-red-500 text-base">✳</span>
+              <span>SUMATERA UTARA, INDONESIA</span>
+            </div>
+            <p class="mt-2 font-display font-bold text-sm sm:text-base text-white tracking-wide">
+              Every line of code. Built for real-world impact.
+            </p>
+            <p class="mt-1 font-mono-code text-[11px] text-slate-400">
+              S1 Sistem Komputer · Technical Leader · Founder
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Stats Row -->
+      <div class="mt-14 pt-10 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-[#111116]/60 border border-white/[0.06]">
+          <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">
+            10<span class="text-red-500">+</span>
+          </div>
+          <div class="mt-1 font-mono-code text-xs text-slate-400 uppercase tracking-wider">
+            TAHUN PENGALAMAN TEKNIS, OPERASIONAL &amp; MANAJEMEN
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-[#111116]/60 border border-white/[0.06]">
+          <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">
+            15<span class="text-sky-400">+</span>
+          </div>
+          <div class="mt-1 font-mono-code text-xs text-slate-400 uppercase tracking-wider">
+            SISTEM WEB, SPA, POS &amp; INTEGRASI CLOUD AI
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-[#111116]/60 border border-white/[0.06]">
+          <div class="font-display font-extrabold text-3xl sm:text-4xl text-white">
+            100<span class="text-emerald-400">%</span>
+          </div>
+          <div class="mt-1 font-mono-code text-xs text-slate-400 uppercase tracking-wider">
+            ZERO-DEPENDENCY &amp; HIGH PERFORMANCE FOCUS
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 3. 01 / SELECTED WORK — "KARYA YANG BERBICARA." -->
+    <section id="karya" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div class="font-mono-code text-xs sm:text-sm text-red-500 tracking-widest uppercase mb-2">
+            01 / SELECTED WORK
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase tracking-tight">
+            KARYA YANG BERBICARA.
+          </h2>
+        </div>
+        <p class="text-slate-400 text-sm sm:text-base max-w-md">
+          Setiap proyek dirancang untuk menyelesaikan permasalahan nyata—mulai dari pemrosesan grafis di sisi klien hingga otomatisasi bisnis berbasis AI.
+        </p>
+      </div>
+
+      <!-- Interactive Filter Tabs & Search Bar -->
+      <div class="mt-10 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+        <!-- Category Buttons -->
+        <div id="filterButtons" class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="filterProjects('all')" data-filter="all" class="filter-btn active px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-red-600 text-white border border-red-500 transition">
+            Semua (5)
+          </button>
+          <button type="button" onclick="filterProjects('spa')" data-filter="spa" class="filter-btn px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-[#111116] text-slate-300 border border-white/10 hover:border-white/30 transition">
+            Web Apps &amp; SPA
+          </button>
+          <button type="button" onclick="filterProjects('webgl')" data-filter="webgl" class="filter-btn px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-[#111116] text-slate-300 border border-white/10 hover:border-white/30 transition">
+            WebGL &amp; Canvas
+          </button>
+          <button type="button" onclick="filterProjects('ai')" data-filter="ai" class="filter-btn px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-[#111116] text-slate-300 border border-white/10 hover:border-white/30 transition">
+            AI &amp; Cloud
+          </button>
+          <button type="button" onclick="filterProjects('portal')" data-filter="portal" class="filter-btn px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-[#111116] text-slate-300 border border-white/10 hover:border-white/30 transition">
+            Enterprise Portal
+          </button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full lg:w-72">
+          <input
+            id="projectSearchInput"
+            type="text"
+            oninput="searchProjects()"
+            placeholder="Cari teknologi / proyek..."
+            class="w-full pl-4 pr-10 py-2.5 rounded-full bg-[#111116] border border-white/10 focus:border-red-500 focus:outline-none text-sm text-white placeholder-slate-500 font-mono-code"
+          />
+          <span class="absolute right-3.5 top-2.5 text-slate-500 font-mono-code text-xs">⌕</span>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div id="projectsGrid" class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered dynamically by JS for smooth filtering & modal view -->
+      </div>
+
+    </section>
+
+    <!-- 4. ECOSYSTEM & ORGANIZATIONS MARQUEE -->
+    <section class="py-14 border-y border-white/[0.08] bg-[#0b0b0f]/90">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex items-center justify-between">
+        <span class="font-mono-code text-xs uppercase tracking-[0.2em] text-slate-400">
+          BEEN PART OF THE BIGGER PICTURE · ECOSYSTEM &amp; INSTITUTIONS
+        </span>
+        <span class="font-mono-code text-xs text-red-500">✳ VERIFIED TRACK RECORD</span>
+      </div>
+
+      <div class="marquee-container py-3">
+        <div class="marquee-track gap-6 items-center">
+          <!-- Set 1 -->
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ Yayasan Markaz Yatim Duafa Qurani
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-sky-400 mx-2">
+            ✳ WAWANCELLCOMP Studio &amp; IT Hub
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ Laundry QU (Unit Wakaf Produktif)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-amber-400 mx-2">
+            ✳ Universitas Royal (S1 Sistem Komputer)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ AMIK Royal Kisaran (D3 Teknik Komputer)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-emerald-400 mx-2">
+            ✳ BPVP Bandung Barat
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-red-400 mx-2">
+            ✳ K-Means Santri Analytics
+          </span>
+
+          <!-- Set 2 (Duplicate for seamless loop) -->
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ Yayasan Markaz Yatim Duafa Qurani
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-sky-400 mx-2">
+            ✳ WAWANCELLCOMP Studio &amp; IT Hub
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ Laundry QU (Unit Wakaf Produktif)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-amber-400 mx-2">
+            ✳ Universitas Royal (S1 Sistem Komputer)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-white mx-2">
+            ✳ AMIK Royal Kisaran (D3 Teknik Komputer)
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-emerald-400 mx-2">
+            ✳ BPVP Bandung Barat
+          </span>
+          <span class="px-6 py-3 rounded-full bg-[#111116] border border-white/10 font-display font-bold text-sm sm:text-base text-red-400 mx-2">
+            ✳ K-Means Santri Analytics
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. A LOOK UNDER THE SURFACE — "FROM RAW LOGIC. TO REAL EXPERIENCE." -->
+    <section id="surface" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <div class="font-mono-code text-xs sm:text-sm text-sky-400 tracking-widest uppercase mb-2">
+            A LOOK UNDER THE SURFACE
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase tracking-tight">
+            FROM RAW LOGIC. <span class="text-red-500">TO REAL EXPERIENCE.</span>
+          </h2>
+        </div>
+        <p class="text-slate-400 text-sm sm:text-base max-w-md">
+          Geser slider interaktif di bawah ini untuk melihat perbandingan arsitektur kode <span class="text-white font-medium">Vanilla JS + WebGL</span> dengan antarmuka aplikasi akhir yang berjalan mulus tanpa latensi server.
+        </p>
+      </div>
+
+      <!-- Interactive Comparison Box -->
+      <div class="rounded-3xl border border-white/15 bg-[#111116] p-4 sm:p-6 shadow-2xl">
+        
+        <!-- Top Status Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-white/10 font-mono-code text-xs">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded bg-red-500/20 text-red-400 border border-red-500/30">LEFT: RAW ARCHITECTURE / SHADER CODE</span>
+          </div>
+          <div class="text-slate-400">
+            SLIDE POSITION: <span id="sliderPercentText" class="text-white font-bold">50%</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">RIGHT: LIVE 60FPS CLIENT APPLICATION</span>
+          </div>
+        </div>
+
+        <!-- Comparison Viewport -->
+        <div id="comparisonViewport" class="comparison-wrapper relative h-[360px] sm:h-[420px] rounded-2xl border border-white/10 bg-[#090d16]">
+          
+          <!-- RIGHT LAYER (FINAL RENDERED UI) -->
+          <div class="absolute inset-0 p-6 sm:p-10 flex flex-col justify-between bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#1e1b4b]">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono-code text-xs">
+                  ● LIVE RENDER · 60 FPS
+                </span>
+                <span class="font-mono-code text-xs text-slate-300 hidden sm:inline">
+                  0ms Server Latency · Local Disk Save Ready
+                </span>
+              </div>
+              <span class="font-display font-bold text-sm text-sky-400">PHOTOBOOTH BY WCC + POS ENGINE</span>
+            </div>
+
+            <!-- Stylized UI Preview Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-auto">
+              <div class="p-5 rounded-2xl bg-white/[0.06] backdrop-blur-md border border-white/15">
+                <div class="text-xs font-mono-code text-sky-300 mb-1">WEBGL SHADER PIPELINE</div>
+                <div class="font-display font-bold text-xl text-white">Real-Time Skin Smoothing</div>
+                <p class="text-xs text-slate-300 mt-2">Pemrosesan piksel langsung di GPU browser dengan filter bilateral &amp; lut warna instan.</p>
+                <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                  <div class="w-11/12 h-full bg-gradient-to-r from-sky-400 to-emerald-400"></div>
+                </div>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white/[0.06] backdrop-blur-md border border-white/15">
+                <div class="text-xs font-mono-code text-amber-300 mb-1">FILE SYSTEM ACCESS API</div>
+                <div class="font-display font-bold text-xl text-white">Direct Local Disk I/O</div>
+                <p class="text-xs text-slate-300 mt-2">Menyimpan ribuan foto resolusi tinggi langsung ke folder PC tanpa upload bolak-balik.</p>
+                <div class="mt-4 font-mono-code text-[11px] text-emerald-300">✓ DirectoryHandle Active</div>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white/[0.06] backdrop-blur-md border border-white/15">
+                <div class="text-xs font-mono-code text-red-300 mb-1">LAUNDRY QU POS SPA</div>
+                <div class="font-display font-bold text-xl text-white">Multi-Tier Member Engine</div>
+                <p class="text-xs text-slate-300 mt-2">Kalkulasi diskon kupon otomatis, cetak struk termal, &amp; laporan kasir offline-first.</p>
+                <div class="mt-4 font-mono-code text-[11px] text-sky-300">✓ Zero-Dependency SPA</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs font-mono-code text-slate-300 pt-3 border-t border-white/10">
+              <span>STATUS: PRODUCTION READY</span>
+              <span>CLIENT-SIDE ARCHITECTURE BY SULISTIAWAN</span>
+            </div>
+          </div>
+
+          <!-- LEFT LAYER (RAW CODE / WIREFRAME OVERLAY) -->
+          <div id="comparisonOverlay" class="comparison-overlay bg-[#070709] p-6 sm:p-10 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded bg-red-500/15 border border-red-500/30 text-red-400 font-mono-code text-xs">
+                &lt;/&gt; RAW VANILLA JS &amp; GLSL SHADER
+              </span>
+              <span class="font-mono-code text-xs text-slate-500">wcc_engine_core.js</span>
+            </div>
+
+            <pre class="font-mono-code text-[11px] sm:text-xs leading-relaxed text-slate-300 overflow-x-hidden my-auto select-text"><code class="text-red-400">const</code> <code class="text-sky-300">initWebGLPhotobooth</code> = <code class="text-red-400">async</code> (canvasEl) =&gt; {
+  <code class="text-slate-500">// 1. Zero-dependency WebGL2 context initialization</code>
+  <code class="text-red-400">const</code> gl = canvasEl.getContext(<code class="text-amber-300">'webgl2'</code>, { preserveDrawingBuffer: <code class="text-sky-400">true</code> });
+  <code class="text-red-400">const</code> dirHandle = <code class="text-red-400">await</code> window.showDirectoryPicker({ mode: <code class="text-amber-300">'readwrite'</code> });
+
+  <code class="text-slate-500">// 2. Real-time bilateral skin smoothing fragment pass</code>
+  <code class="text-red-400">function</code> <code class="text-emerald-300">renderFrame</code>(timestamp) {
+    gl.useProgram(shaderProgram);
+    gl.uniform1f(uSmoothnessLoc, state.skinSmoothingFactor);
+    gl.drawArrays(gl.TRIANGLES, <code class="text-amber-300">0</code>, <code class="text-amber-300">6</code>);
+    requestAnimationFrame(renderFrame);
+  }
+
+  <code class="text-slate-500">// 3. Direct-to-disk write without server roundtrip</code>
+  <code class="text-red-400">return</code> { saveFrameDirectly: (blob, name) =&gt; writeToDisk(dirHandle, blob, name) };
+};</pre>
+
+            <div class="flex items-center justify-between text-xs font-mono-code text-slate-500 pt-3 border-t border-white/10">
+              <span>0 EXTERNAL LIBRARIES</span>
+              <span>PURE ES6+ &amp; BROWSER APIS</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Range Slider Control -->
+        <div class="mt-5 flex items-center gap-4">
+          <span class="font-mono-code text-xs text-red-400 uppercase">Code</span>
+          <input
+            id="comparisonRange"
+            type="range"
+            min="5"
+            max="95"
+            value="50"
+            oninput="updateComparisonSlider(this.value)"
+            class="w-full accent-red-500 cursor-ew-resize h-2 bg-white/10 rounded-lg"
+            aria-label="Geser perbandingan kode dan tampilan hasil"
+          />
+          <span class="font-mono-code text-xs text-sky-400 uppercase">Reality</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. 02 / BEHIND THE CODE — "BUKAN SEKADAR KODE. TAPI SOLUSI & KEPEMIMPINAN." -->
+    <section id="tentang" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
+      
+      <!-- Section Heading -->
+      <div class="max-w-3xl">
+        <div class="font-mono-code text-xs sm:text-sm text-red-500 tracking-widest uppercase mb-2">
+          02 / BEHIND THE CODE
+        </div>
+        <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase tracking-tight leading-tight">
+          BUKAN SEKADAR KODE. <span class="text-slate-400">TAPI SOLUSI &amp; KEPEMIMPINAN.</span>
+        </h2>
+      </div>
+
+      <!-- Bio + Leadership Grid -->
+      <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        <!-- Left Column: Story & Philosophy -->
+        <div class="lg:col-span-7 space-y-5 text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p>
+            Banyak pengembang hanya berfokus pada sintaks. Saya berangkat dari <strong class="text-white">masalah operasional nyata di lapangan</strong>. Sebagai lulusan <strong class="text-white">S1 Sistem Komputer</strong> sekaligus praktisi yang memimpin langsung unit sosial dan bisnis, saya memahami bagaimana teknologi seharusnya mempermudah manusia, bukan memperumitnya.
+          </p>
+          <p>
+            Di luar layar kode, saya mengemban amanah sebagai <strong class="text-white">Kepala Rumah Anak Yatim</strong> di Yayasan Markaz Yatim Duafa Qurani yang mengoordinasikan berbagai divisi (Pengasuh, Admin/TU, Humas, Musyrif/ah, Bendahara, hingga Unit Usaha), serta mendirikan <strong class="text-white">WAWANCELLCOMP</strong>.
+          </p>
+          <p>
+            Perpaduan antara <span class="text-red-400 font-medium">ketajaman teknis Full Stack Developer</span> dan <span class="text-sky-400 font-medium">kematangan manajemen lintas divisi</span> membuat saya terbiasa membangun sistem yang cepat, hemat biaya infrastruktur, mudah digunakan oleh orang awam, dan berdampak langsung pada produktivitas organisasi.
+          </p>
+
+          <!-- Education Cards -->
+          <div class="pt-6">
+            <h3 class="font-mono-code text-xs uppercase tracking-[0.2em] text-slate-400 mb-4">
+              EDUCATION &amp; VOCATIONAL CREDENTIALS
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10">
+                <div class="font-mono-code text-xs text-red-400">2026 · SARJANA</div>
+                <div class="font-display font-bold text-base text-white mt-1">S1 Sistem Komputer</div>
+                <div class="text-xs text-slate-400 mt-1">Universitas Royal · Aktif di BEM</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10">
+                <div class="font-mono-code text-xs text-sky-400">2012 · DIPLOMA</div>
+                <div class="font-display font-bold text-base text-white mt-1">D3 Teknik Komputer</div>
+                <div class="text-xs text-slate-400 mt-1">AMIK Royal Kisaran</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10">
+                <div class="font-mono-code text-xs text-emerald-400">SERTIFIKASI VOKASI</div>
+                <div class="font-display font-bold text-base text-white mt-1">Pelatihan Kejuruan</div>
+                <div class="text-xs text-slate-400 mt-1">BPVP Bandung Barat, Jawa Barat</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Technical Toolkit -->
+        <div class="lg:col-span-5">
+          <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/10">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-display font-bold text-xl text-white uppercase">TECHNICAL TOOLKIT</h3>
+              <span class="font-mono-code text-xs text-red-400">STACK &amp; APIS</span>
+            </div>
+
+            <div class="space-y-6">
+              <div>
+                <div class="font-mono-code text-xs text-slate-400 uppercase mb-2.5">Frontend &amp; Browser Engine</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Modern JavaScript (ES6+)</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-sky-300">WebGL Shaders</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">HTML5 Canvas 2D/3D</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-emerald-300">File System Access API</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">SPA Architecture</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Responsive CSS3 / Tailwind</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="font-mono-code text-xs text-slate-400 uppercase mb-2.5">Backend, Cloud &amp; AI Orchestration</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-amber-300">Firebase (Firestore, Auth, Hosting)</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-red-300">Gemini AI API</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Node.js</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Cloudinary API</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">PHP / Apache (XAMPP)</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">RESTful API</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="font-mono-code text-xs text-slate-400 uppercase mb-2.5">Data, DevOps &amp; Leadership</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Git &amp; GitHub Pages</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Vercel Serverless</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-sky-300">K-Means Data Clustering</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-emerald-300">Cross-Division Leadership</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 font-mono-code text-xs text-white">Live Coding &amp; Mentoring</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 5-Step Process: FROM IDEA TO DEPLOYMENT -->
+      <div class="mt-20 pt-14 border-t border-white/[0.08]">
+        <div class="font-mono-code text-xs text-slate-400 uppercase tracking-[0.2em] mb-8">
+          FROM IDEA TO DEPLOYMENT · 5-STAGE WORKFLOW
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="p-5 rounded-2xl bg-[#111116]/80 border border-white/[0.07]">
+            <div class="font-mono-code text-xs text-red-500 font-bold">01 / THE PROBLEM</div>
+            <div class="font-display font-bold text-lg text-white mt-2">Analisis Lapangan</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Memetakan kendala operasional nyata dan kebutuhan alur pengguna secara langsung.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#111116]/80 border border-white/[0.07]">
+            <div class="font-mono-code text-xs text-sky-400 font-bold">02 / THE ARCHITECTURE</div>
+            <div class="font-display font-bold text-lg text-white mt-2">Desain Sistem</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Merancang skema database, integrasi API, dan arsitektur ringan tanpa ketergantungan berlebih.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#111116]/80 border border-white/[0.07]">
+            <div class="font-mono-code text-xs text-amber-400 font-bold">03 / THE ENGINEERING</div>
+            <div class="font-display font-bold text-lg text-white mt-2">Clean Code</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Menulis kode modular berbasis standar modern yang cepat, aman, dan mudah dipelihara.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#111116]/80 border border-white/[0.07]">
+            <div class="font-mono-code text-xs text-emerald-400 font-bold">04 / THE OPTIMIZATION</div>
+            <div class="font-display font-bold text-lg text-white mt-2">Uji Performa</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Memastikan eksekusi 60FPS, dukungan offline-first, dan efisiensi kuota cloud.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#111116]/80 border border-white/[0.07]">
+            <div class="font-mono-code text-xs text-purple-400 font-bold">05 / THE IMPACT</div>
+            <div class="font-display font-bold text-lg text-white mt-2">Solusi Nyata</div>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Deployment siap pakai yang langsung mempercepat layanan bisnis dan institusi.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 7. 03 / THE JOURNEY — "TERUS BERGERAK. TERUS BERKARYA." -->
+    <section id="perjalanan" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div>
+          <div class="font-mono-code text-xs sm:text-sm text-red-500 tracking-widest uppercase mb-2">
+            03 / THE JOURNEY
+          </div>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl text-white uppercase tracking-tight">
+            TERUS BERGERAK. <span class="text-slate-400">TERUS BERKARYA.</span>
+          </h2>
+        </div>
+        <p class="text-slate-400 text-sm sm:text-base max-w-md">
+          Rekam jejak karier yang menggabungkan rekayasa perangkat lunak, kewirausahaan teknologi, dan kepemimpinan lembaga sosial.
+        </p>
+      </div>
+
+      <!-- Timeline List -->
+      <div class="space-y-4">
+        
+        <!-- Item 1 -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/10 hover:border-red-500/40 transition grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div class="lg:col-span-3 font-mono-code text-xs text-red-400 uppercase tracking-wider">
+            2026 · SEKARANG
+          </div>
+          <div class="lg:col-span-4">
+            <h3 class="font-display font-bold text-xl text-white">Full Stack Web Developer &amp; AI Integrator</h3>
+            <p class="text-xs font-mono-code text-slate-400 mt-1">Independent Software Engineer &amp; System Architect</p>
+          </div>
+          <div class="lg:col-span-5 text-sm text-slate-300 leading-relaxed">
+            Merancang aplikasi web SPA berperforma tinggi, aplikasi Photobooth WebGL, sistem POS multi-tier, portal CMS yayasan berbasis Firebase, serta sistem orkestrasi Multi-Agent AI.
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/10 hover:border-sky-500/40 transition grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div class="lg:col-span-3 font-mono-code text-xs text-sky-400 uppercase tracking-wider">
+            AKTIF · SEKARANG
+          </div>
+          <div class="lg:col-span-4">
+            <h3 class="font-display font-bold text-xl text-white">Kepala Rumah Anak Yatim</h3>
+            <p class="text-xs font-mono-code text-slate-400 mt-1">Yayasan Markaz Yatim Duafa Qurani</p>
+          </div>
+          <div class="lg:col-span-5 text-sm text-slate-300 leading-relaxed">
+            Memimpin operasional lembaga dan mengoordinasikan lintas divisi strategis: Divisi Pengasuh, Admin/TU, Humas, Musyrif/ah, Bendahara, dan Unit Usaha. Menginisiasi digitalisasi sistem informasi santri.
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/10 hover:border-amber-500/40 transition grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div class="lg:col-span-3 font-mono-code text-xs text-amber-400 uppercase tracking-wider">
+            AKTIF · SEKARANG
+          </div>
+          <div class="lg:col-span-4">
+            <h3 class="font-display font-bold text-xl text-white">Founder &amp; Technical Lead</h3>
+            <p class="text-xs font-mono-code text-slate-400 mt-1">WAWANCELLCOMP</p>
+          </div>
+          <div class="lg:col-span-5 text-sm text-slate-300 leading-relaxed">
+            Mendirikan dan mengelola unit usaha terpadu yang mencakup layanan servis laptop/PC, percetakan, studio foto, penyewaan photobooth interaktif, serta pengembangan perangkat lunak kasir internal.
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/10 hover:border-emerald-500/40 transition grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <div class="lg:col-span-3 font-mono-code text-xs text-emerald-400 uppercase tracking-wider">
+            AKTIF · SEKARANG
+          </div>
+          <div class="lg:col-span-4">
+            <h3 class="font-display font-bold text-xl text-white">Operations Manager</h3>
+            <p class="text-xs font-mono-code text-slate-400 mt-1">Laundry QU (Wakaf Produktif) &amp; Mr. Washi Laundry</p>
+          </div>
+          <div class="lg:col-span-5 text-sm text-slate-300 leading-relaxed">
+            Mengelola manajemen operasional harian, standar kualitas layanan pelanggan, serta menerapkan sistem Point of Sale (POS) dan membership bertingkat untuk mendongkrak efisiensi transaksi.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 8. 04 / YOUR NEXT PROJECT — "LET'S WORK TOGETHER." -->
+    <section id="kontak" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.08]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left Contact Details -->
+        <div class="lg:col-span-6 flex flex-col justify-between">
+          <div>
+            <div class="font-mono-code text-xs sm:text-sm text-red-500 tracking-widest uppercase mb-2">
+              04 / YOUR NEXT PROJECT
+            </div>
+            <h2 class="font-display font-extrabold text-4xl sm:text-6xl text-white uppercase tracking-tight leading-none">
+              LET'S WORK <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-sky-400">TOGETHER.</span>
+            </h2>
+            <p class="mt-5 text-slate-300 text-base sm:text-lg leading-relaxed">
+              Tertarik merekrut untuk posisi <strong class="text-white">Full Stack Developer</strong>, <strong class="text-white">Coding Instructor</strong>, atau membutuhkan pengembangan sistem web khusus untuk perusahaan Anda? Mari berdiskusi langsung.
+            </p>
+
+            <!-- Direct Contact List -->
+            <div class="mt-8 space-y-4 font-mono-code text-sm">
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10 flex items-center justify-between">
+                <div>
+                  <div class="text-[11px] text-slate-500">EMAIL RESMI</div>
+                  <a href="mailto:Wawancellcomp@gmail.com" class="text-white hover:text-red-400 transition">Wawancellcomp@gmail.com</a>
+                </div>
+                <button type="button" onclick="copyText('Wawancellcomp@gmail.com', 'Email disalin!')" class="text-xs px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300">Salin</button>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10 flex items-center justify-between">
+                <div>
+                  <div class="text-[11px] text-slate-500">WHATSAPP / TELEPON</div>
+                  <a href="https://wa.me/6285261804096" target="_blank" rel="noopener noreferrer" class="text-white hover:text-emerald-400 transition">0852-6180-4096 / 0822-1188-2667</a>
+                </div>
+                <a href="https://wa.me/6285261804096" target="_blank" rel="noopener noreferrer" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Chat WA ↗</a>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-[#111116] border border-white/10 flex items-center justify-between">
+                <div>
+                  <div class="text-[11px] text-slate-500">LINKEDIN &amp; GITHUB</div>
+                  <div class="flex items-center gap-4 mt-0.5">
+                    <a href="https://www.linkedin.com/in/sulistiawan-s-kom-56215b92" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">linkedin.com/in/sulistiawan-s-kom</a>
+                    <span class="text-slate-600">·</span>
+                    <a href="https://github.com/wawancellcomp" target="_blank" rel="noopener noreferrer" class="text-white hover:underline">github.com/wawancellcomp</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono-code text-slate-400">
+            <span>BASED IN: SUMATERA UTARA, INDONESIA</span>
+            <span class="text-emerald-400">● READY FOR REMOTE &amp; ON-SITE</span>
+          </div>
+        </div>
+
+        <!-- Right Interactive WhatsApp Brief Builder (Renando Style) -->
+        <div class="lg:col-span-6">
+          <div class="p-6 sm:p-8 rounded-3xl bg-[#111116] border border-white/15 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
+              <div>
+                <span class="font-mono-code text-xs text-red-400 uppercase">DIRECT BRIEF / RECRUITMENT</span>
+                <h3 class="font-display font-bold text-2xl text-white mt-0.5">Mulai Percakapan</h3>
+              </div>
+              <span class="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 font-mono-code">↗</span>
+            </div>
+
+            <form id="waBriefForm" onsubmit="sendWhatsAppBrief(event)" class="space-y-4">
+              <div>
+                <label class="block font-mono-code text-xs text-slate-400 uppercase mb-2">Nama Anda / Perusahaan *</label>
+                <input
+                  id="senderName"
+                  type="text"
+                  required
+                  placeholder="Contoh: Budi — HRD PT Inteligensia / Klien"
+                  class="w-full px-4 py-3 rounded-xl bg-[#070709] border border-white/10 focus:border-red-500 focus:outline-none text-sm text-white"
+                />
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-xs text-slate-400 uppercase mb-2">Kategori Kebutuhan *</label>
+                <select
+                  id="serviceCategory"
+                  class="w-full px-4 py-3 rounded-xl bg-[#070709] border border-white/10 focus:border-red-500 focus:outline-none text-sm text-white"
+                >
+                  <option value="Full-Time / Remote Full Stack Developer">Rekrutmen: Full Stack Developer (Full-Time / Remote)</option>
+                  <option value="Coding Instructor / Mentor Online">Rekrutmen: Coding Instructor / Mentor Online</option>
+                  <option value="Pembuatan Web App / Single Page Application (SPA)">Proyek: Pembuatan Web App / SPA Kustom</option>
+                  <option value="Sistem Kasir POS / Portal Manajemen">Proyek: Sistem Kasir POS / Portal Manajemen</option>
+                  <option value="Integrasi Cloud & Otomatisasi AI">Proyek: Integrasi Cloud &amp; Otomatisasi AI</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block font-mono-code text-xs text-slate-400 uppercase mb-2">Pesan / Ringkasan Kebutuhan *</label>
+                <textarea
+                  id="projectMessage"
+                  rows="4"
+                  required
+                  placeholder="Tuliskan detail tawaran posisi, jadwal interview, atau spesifikasi proyek yang ingin didiskusikan..."
+                  class="w-full px-4 py-3 rounded-xl bg-[#070709] border border-white/10 focus:border-red-500 focus:outline-none text-sm text-white"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-display font-bold text-sm uppercase tracking-wider transition shadow-lg shadow-red-600/25 flex items-center justify-center gap-2"
+              >
+                <span>Lanjut ke WhatsApp</span>
+                <span class="font-mono-code">↗</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/[0.08] py-10 px-4 sm:px-6 lg:px-8 bg-[#050507] relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-code text-slate-500">
+      <div>
+        © 2026 SULISTIAWAN, S.Kom.® — ALL RIGHTS RESERVED.
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/wawancellcomp" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GITHUB</a>
+        <a href="https://www.linkedin.com/in/sulistiawan-s-kom-56215b92" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">LINKEDIN</a>
+        <a href="mailto:Wawancellcomp@gmail.com" class="hover:text-white transition">EMAIL</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="projectModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="relative w-full max-w-2xl rounded-3xl bg-[#111116] border border-white/15 p-6 sm:p-8 shadow-2xl">
+      <div class="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+          <span id="modalIndexCat" class="font-mono-code text-xs text-red-400 uppercase">01 / WEBGL</span>
+          <h3 id="modalTitle" class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">Project Title</h3>
+        </div>
+        <button type="button" onclick="closeProjectModal()" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-slate-300 font-mono-code text-sm">✕</button>
+      </div>
+
+      <p id="modalDesc" class="mt-5 text-slate-300 text-sm sm:text-base leading-relaxed"></p>
+
+      <div class="mt-5">
+        <div class="font-mono-code text-xs text-slate-400 uppercase mb-2">Fitur &amp; Arsitektur Utama:</div>
+        <ul id="modalHighlights" class="space-y-1.5 text-sm text-slate-300 list-disc list-inside"></ul>
+      </div>
+
+      <div class="mt-6">
+        <div class="font-mono-code text-xs text-slate-400 uppercase mb-2">Tech Stack:</div>
+        <div id="modalTags" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="mt-8 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <a id="modalGithubLink" href="https://github.com/wawancellcomp" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-500 text-white font-mono-code text-xs uppercase tracking-wider transition">
+          Lihat di GitHub ↗
+        </a>
+        <button type="button" onclick="closeProjectModal()" class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 font-mono-code text-xs uppercase">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotice" class="fixed bottom-6 right-6 z-50 hidden px-5 py-3 rounded-2xl bg-emerald-500 text-black font-mono-code text-xs font-bold shadow-xl">
+    Tersalin!
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Dataset Proyek Portofolio Sulistiawan
+    const PROJECTS_DATA = [
+      {
+        id: '01',
+        title: 'PHOTOBOOTH BY WCC',
+        category: 'webgl',
+        categoryLabel: 'WebGL & Canvas / 2026',
+        summary: 'Single-Page Application photobooth real-time dengan shader WebGL skin smoothing, filter interaktif HTML5 Canvas, dan penyimpanan langsung ke disk lokal menggunakan File System Access API tanpa latensi server.',
+        highlights: [
+          'Pemrosesan penghalus kulit (skin smoothing) real-time berbasis shader WebGL di sisi klien.',
+          'Integrasi File System Access API untuk menyimpan foto langsung ke folder lokal tanpa perantara server.',
+          'Arsitektur satu file mandiri (zero-dependency) dengan antarmuka responsif dan hemat memori.'
+        ],
+        tags: ['Vanilla JavaScript', 'WebGL Shaders', 'HTML5 Canvas', 'File System Access API', 'Zero-Dependency'],
+        githubUrl: 'https://github.com/wawancellcomp'
+      },
+      {
+        id: '02',
+        title: 'LAUNDRY QU — SMART POS SPA',
+        category: 'spa',
+        categoryLabel: 'Web Apps & SPA / 2026',
+        summary: 'Sistem Point of Sale (POS) modern berarsitektur offline-first dengan manajemen membership bertingkat (multi-tier), pelacakan kupon diskon, dan pembuatan laporan transaksi instan untuk unit usaha wakaf produktif.',
+        highlights: [
+          'Arsitektur Single Page Application (SPA) cepat yang tetap berjalan lancar meskipun koneksi internet terputus.',
+          'Sistem tingkatan member dan kupon otomatis untuk meningkatkan retensi pelanggan.',
+          'Pembuatan struk belanja dan rekapitulasi pembukuan kasir harian secara instan.'
+        ],
+        tags: ['JavaScript ES6+', 'SPA Architecture', 'LocalStorage / IndexedDB', 'Thermal Receipt UI', 'Modular CSS'],
+        githubUrl: 'https://github.com/wawancellcomp'
+      },
+      {
+        id: '03',
+        title: 'AUTONOMOUS MULTI-AGENT AI WORKFLOW',
+        category: 'ai',
+        categoryLabel: 'AI & Cloud / 2026',
+        summary: 'Sistem orkestrasi multi-agen cerdas menggunakan Gemini API, Firebase, dan Vercel untuk otomatisasi pembuatan konsep visual promosi media sosial dan copywriting pemasaran terpadu.',
+        highlights: [
+          'Pipeline prompt-chaining otomatis antar-agen AI untuk menyusun copywriting dan arahan desain visual.',
+          'Penyimpanan riwayat kampanye dan autentikasi terintegrasi dengan Firebase.',
+          'Deployment serverless berkecepatan tinggi melalui platform Vercel.'
+        ],
+        tags: ['Gemini AI API', 'Node.js', 'Firebase', 'Vercel Serverless', 'Multi-Agent System'],
+        githubUrl: 'https://github.com/wawancellcomp'
+      },
+      {
+        id: '04',
+        title: 'PORTAL & CMS YAYASAN MARKAZ YATIM DUAFA QURANI',
+        category: 'portal',
+        categoryLabel: 'Enterprise Portal / 2026',
+        summary: 'Portal informasi publik dan dashboard manajemen internal yayasan berbasis Firebase & Cloudinary untuk transparansi kegiatan santri, pelaporan program sosial, dan pengelolaan media teroptimasi.',
+        highlights: [
+          'Dashboard admin terproteksi untuk pembaruan artikel kegiatan, data santri, dan laporan donasi real-time.',
+          'Transformasi dan kompresi gambar otomatis menggunakan integrasi Cloudinary API.',
+          'Dilengkapi pemodelan analisis pengelompokan data santri berbasis algoritma K-Means.'
+        ],
+        tags: ['Firebase Firestore', 'Firebase Auth', 'Cloudinary CDN', 'K-Means Analytics', 'Responsive Web'],
+        githubUrl: 'https://github.com/wawancellcomp'
+      },
+      {
+        id: '05',
+        title: 'WAWANCELLCOMP INTEGRATED POS & SERVICE HUB',
+        category: 'spa',
+        categoryLabel: 'Web Apps & SPA / 2026',
+        summary: 'Sistem manajemen operasional toko serba ada yang mengintegrasikan penjualan ATK, antrean percetakan, tiket servis PC/laptop, booking studio foto, dan penyewaan photobooth.',
+        highlights: [
+          'Pelacakan status servis perangkat keras komputer/laptop dari penerimaan hingga selesai.',
+          'Manajemen inventaris barang ATK dan kalkulasi harga cetak dokumen otomatis.',
+          'Jadwal reservasi studio foto dan paket sewa photobooth dalam satu layar terpusat.'
+        ],
+        tags: ['Full Stack Web', 'POS System', 'Service Ticketing', 'Inventory Management', 'JavaScript'],
+        githubUrl: 'https://github.com/wawancellcomp'
+      }
+    ];
+
+    let activeCategory = 'all';
+
+    // Render daftar proyek ke dalam grid
+    function renderProjects() {
+      const grid = document.getElementById('projectsGrid');
+      const query = (document.getElementById('projectSearchInput')?.value || '').toLowerCase().trim();
+
+      const filtered = PROJECTS_DATA.filter(item => {
+        const matchCat = activeCategory === 'all' || item.category === activeCategory;
+        const matchSearch =
+          item.title.toLowerCase().includes(query) ||
+          item.summary.toLowerCase().includes(query) ||
+          item.tags.some(t => t.toLowerCase().includes(query));
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-12 rounded-3xl bg-[#111116] border border-white/10 text-center">
+            <p class="font-mono-code text-sm text-slate-400">Tidak ada proyek yang cocok dengan kata kunci pencarian.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(project => `
+        <article class="project-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 font-mono-code text-xs">
+              <span class="text-red-500 font-bold">${project.id} / ${project.categoryLabel}</span>
+              <span class="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300">FEATURED</span>
+            </div>
+
+            <h3 class="mt-4 font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
+              ${project.title}
+            </h3>
+
+            <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+              ${project.summary}
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              ${project.tags.map(tag => `
+                <span class="px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 font-mono-code text-[11px] text-slate-300">
+                  ${tag}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="mt-8 pt-5 border-t border-white/[0.08] flex items-center justify-between gap-4">
+            <button
+              type="button"
+              onclick="openProjectModal('${project.id}')"
+              class="font-mono-code text-xs uppercase tracking-wider text-white hover:text-red-400 transition flex items-center gap-1.5"
+            >
+              <span>Explore Case Study</span>
+              <span>→</span>
+            </button>
+
+            <a
+              href="${project.githubUrl}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-mono-code text-xs text-slate-400 hover:text-sky-400 transition"
+            >
+              GitHub Repo ↗
+            </a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Filter kategori proyek
+    function filterProjects(category) {
+      activeCategory = category;
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-filter') === category) {
+          btn.className = 'filter-btn active px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-red-600 text-white border border-red-500 transition';
+        } else {
+          btn.className = 'filter-btn px-4 py-2 rounded-full font-mono-code text-xs uppercase tracking-wider bg-[#111116] text-slate-300 border border-white/10 hover:border-white/30 transition';
+        }
+      });
+      renderProjects();
+    }
+
+    function searchProjects() {
+      renderProjects();
+    }
+
+    // Modal Detail Proyek
+    function openProjectModal(projectId) {
+      const project = PROJECTS_DATA.find(p => p.id === projectId);
+      if (!project) return;
+
+      document.getElementById('modalIndexCat').textContent = `${project.id} / ${project.categoryLabel}`;
+      document.getElementById('modalTitle').textContent = project.title;
+      document.getElementById('modalDesc').textContent = project.summary;
+      document.getElementById('modalGithubLink').href = project.githubUrl;
+
+      const highlightsEl = document.getElementById('modalHighlights');
+      highlightsEl.innerHTML = project.highlights.map(h => `<li>${h}</li>`).join('');
+
+      const tagsEl = document.getElementById('modalTags');
+      tagsEl.innerHTML = project.tags.map(t => `
+        <span class="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 font-mono-code text-xs text-sky-300">${t}</span>
+      `).join('');
+
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Slider Perbandingan Before/After (Code vs Render)
+    function updateComparisonSlider(val) {
+      const overlay = document.getElementById('comparisonOverlay');
+      const label = document.getElementById('sliderPercentText');
+      if (overlay) overlay.style.width = `${val}%`;
+      if (label) label.textContent = `${val}%`;
+    }
+
+    // Toggle Motion ON / OFF
+    let motionEnabled = true;
+    function toggleMotion() {
+      motionEnabled = !motionEnabled;
+      document.body.classList.toggle('motion-off', !motionEnabled);
+      document.getElementById('motionLabel').textContent = motionEnabled ? 'Motion: ON' : 'Motion: OFF';
+      document.getElementById('motionDot').className = motionEnabled
+        ? 'w-1.5 h-1.5 rounded-full bg-emerald-400'
+        : 'w-1.5 h-1.5 rounded-full bg-slate-500';
+    }
+
+    // Scroll ke form kontak & fokus otomatis
+    function openBriefModal() {
+      const contactSection = document.getElementById('kontak');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          document.getElementById('senderName')?.focus();
+        }, 500);
+      }
+    }
+
+    // Kirim pesan terformat langsung ke WhatsApp Sulistiawan
+    function sendWhatsAppBrief(event) {
+      event.preventDefault();
+      const name = document.getElementById('senderName').value.trim();
+      const category = document.getElementById('serviceCategory').value;
+      const message = document.getElementById('projectMessage').value.trim();
+
+      const text = `Halo Bapak Sulistiawan, S.Kom.,%0A%0ASaya *${encodeURIComponent(name)}* ingin berdiskusi terkait:%0A📌 *Kategori:* ${encodeURIComponent(category)}%0A%0A📝 *Pesan / Detail:*%0A${encodeURIComponent(message)}%0A%0A(Dikirim melalui Website Portofolio Resmi)`;
+      const waUrl = `https://wa.me/6285261804096?text=${text}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    // Fungsi Salin Teks ke Clipboard
+    function copyText(text, noticeMessage) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      const toast = document.getElementById('toastNotice');
+      toast.textContent = noticeMessage || 'Tersalin!';
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    // Inisialisasi saat halaman dimuat
+    window.onload = function () {
+      renderProjects();
+    };
+  </script>
+</body>
+</html>
