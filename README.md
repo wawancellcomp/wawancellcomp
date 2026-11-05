@@ -5,7 +5,7 @@
 
   <p>
     <a href="mailto:Wawancellcomp@gmail.com"><img src="https://img.shields.io/badge/Email-Wawancellcomp%40gmail.com-ea4335?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>
-    <a href="https://linkedin.com"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+    <a href="https://www.linkedin.com/in/sulistiawan-s-kom-56215b92" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Sulistiawan%20S.Kom-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn Sulistiawan" /></a>
     <img src="https://img.shields.io/badge/Location-North%20Sumatra%2C%20ID-108554?style=flat-square&logo=google-maps&logoColor=white" alt="Location" />
   </p>
 </div>
